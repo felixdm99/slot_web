@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Slot Machine</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .slot-container {
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+      background: #222;
+      border: 5px solid gold;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      animation: cambiarColorBorde 2s linear infinite;
+    }
+
+    .slot {
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 50px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      border: 3px solid red;
+      animation: cambiarColorBorde 2s linear infinite;
+    }
+
+    .link-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 3px solid red;
+      border-radius: 10px;
+      padding: 10px;
+      animation: cambiarColorBorde 2s linear infinite;
+    }
+
+    .link-box a {
+      margin-top: 10px;
+      color: gold;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    @keyframes cambiarColorBorde {
+      0%   { border-color: red; }
+      25%  { border-color: orange; }
+      50%  { border-color: yellow; }
+      75%  { border-color: green; }
+      100% { border-color: red; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slot-container">
+    <div class="slot" id="slot1">🍒</div>
+    <div class="slot" id="slot2">🍋</div>
+    <div class="slot" id="slot3">💎</div>
+  </div>
+
+  <div class="link-box">
+    <a href="https://wa.link/o7kymm" target="_blank">TOCA AQUÍ PARA CREAR TU USUARIO Y GANÁR!</a>
+  </div>
+
+  <script>
+    const simbolos = ['🍒', '🍋', '💎', '🍉', '🔔', '🍀'];
+
+    const slot1 = document.getElementById('slot1');
+    const slot2 = document.getElementById('slot2');
+    const slot3 = document.getElementById('slot3');
+
+    function obtenerSimboloAleatorio() {
+      const indice = Math.floor(Math.random() * simbolos.length);
+      return simbolos[indice];
+    }
+
+    function girarSlotsAutomatico() {
+      let contador = 0;
+      const intervalo = setInterval(() => {
+        slot1.textContent = obtenerSimboloAleatorio();
+        slot2.textContent = obtenerSimboloAleatorio();
+        slot3.textContent = obtenerSimboloAleatorio();
+        contador++;
+
+        if (contador >= 30) {
+          const final1 = slot1.textContent;
+          const final2 = slot2.textContent;
+          const final3 = slot3.textContent;
+
+          if (final1 === final2 && final2 === final3) {
+            clearInterval(intervalo);
+            setTimeout(girarSlotsAutomatico, 2000);
+          } else {
+            contador = 0;
+          }
+        }
+      }, 150);
+    }
+
+    window.onload = girarSlotsAutomatico;
+  </script>
+</body>
+</html>
+
